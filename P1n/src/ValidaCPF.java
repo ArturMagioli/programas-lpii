@@ -124,6 +124,18 @@ public class ValidaCPF {
         if ((dig10 == CPF.charAt(9)) && (dig11 == CPF.charAt(10))) return(true);
         else throw new InputMismatchException("O CPF inserido não é válido.");
     }
+
+    /**
+     * Retorna um long de um String CPF válido
+     * @param CPF
+     * @return
+     */
+    public long toLong (String CPF) throws RuntimeException {
+        if (isCPF(CPF))
+            return Long.parseLong(CPF.replaceAll("[-./]", ""));
+        else
+            throw new RuntimeException("Não foi possível realizar a conversão");
+    }
     
     public String imprimeCPF(String CPF) {
         CPF = CPF.replaceAll("[-./]", "");
