@@ -1,15 +1,12 @@
 import java.util.InputMismatchException;
 
 public class ValidaCPF {
-
-    public ValidaCPF() {}
-
     /**
      * Verifica se existe somente números em uma String
      * @param CPF
      * @return
      */
-    private boolean justNumbers(String CPF) {
+    private static boolean justNumbers(String CPF) {
         for(int i = 0; i < CPF.length(); i++)
             if((CPF.charAt(i) < 48) || (CPF.charAt(i) > 57)) 
                 return false;
@@ -17,7 +14,7 @@ public class ValidaCPF {
         return true;
     }
 
-    private boolean isJustCPFNumbers(String CPF) {
+    private static boolean isJustCPFNumbers(String CPF) {
         if(CPF.length() != 11) 
             return false;
 
@@ -27,7 +24,7 @@ public class ValidaCPF {
         return true;
     }
 
-    private boolean isStandardCPFFormat(String CPF) {
+    private static boolean isStandardCPFFormat(String CPF) {
 
         if(CPF.length() != 14)
             return false;
@@ -64,7 +61,7 @@ public class ValidaCPF {
         return true;
     }
 
-    public boolean isConvertible(String CPF) {
+    public static boolean isConvertible(String CPF) {
         return isJustCPFNumbers(CPF) || isStandardCPFFormat(CPF);
     }
 
@@ -74,7 +71,7 @@ public class ValidaCPF {
      * @param CPF
      * @return
      */
-    public boolean isCPF(String CPF) throws InputMismatchException{
+    public static boolean isCPF(String CPF) throws InputMismatchException{
         //verificando se pode ser convertível.
         if (!isConvertible(CPF)) throw new InputMismatchException("Formato de CPF inválido. Formatos aceitos: XXXXXXXXX, XXX.XXX.XXX-XX, XXX.XXX.XXX/XX");
 
@@ -130,7 +127,7 @@ public class ValidaCPF {
      * @param CPF
      * @return
      */
-    public long toLong (String CPF) throws RuntimeException {
+    public static long toLong (String CPF) throws RuntimeException {
         if (isCPF(CPF))
             return Long.parseLong(CPF.replaceAll("[-./]", ""));
         else
