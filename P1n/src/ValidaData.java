@@ -1,30 +1,75 @@
 import java.time.LocalDate;
 
 public class ValidaData {
-    
-    public boolean isDia(int dia) {
-        return dia >= 1 && dia <= 31;
+
+    private static boolean isNumber(String arg) {
+        for (int i = 0; i < arg.length(); i++) {
+            if (arg.charAt(0) < 48 || arg.charAt(i) > 57) return false;
+        }
+        return true;
     }
 
-    public boolean isMes(int mes) {
-        return mes >= 1 && mes <= 12;
+    public static int converterMes(String mes) {
+        if(isNumber(mes)) {
+            return Integer.parseInt(mes);
+        }else{
+            for(MesEnum m : MesEnum.values()) {
+                if(mes.toUpperCase().equals(m.toString())) {
+                    return m.getMes();
+                }
+            }
+            return -1;
+        }
     }
 
-    public boolean isAno(int ano) {
-        return ano <= LocalDate.now().getYear() && ano >= LocalDate.now().getYear() - 120;
-    }
-
-    private boolean isDiaMesValido(int dia, int limite) {
-        return dia > limite;
-    }
-
-    public boolean isDataValida(int dia, MesEnum mes, int ano) {
-        if (!isDia(dia) || !isMes(mes.getMes()) || !isAno(ano))
+    public static boolean isDia(String dia) {
+        if(isNumber(dia)) {
+            int diaInt = Integer.parseInt(dia);
+            return diaInt >= 1 && diaInt <= 31;
+        }else {
             return false;
+        }
+    }
 
+    public static  boolean isAno(String ano) {
+        if(isNumber(ano)) {
+            int anoInt = Integer.parseInt(ano);
+            return anoInt <= LocalDate.now().getYear() && anoInt >= LocalDate.now().getYear() - 120;
+        }else{
+            return false;
+        }
+    }
+
+    public static boolean isMes(String mes) {
+        int mesInt = converterMes(mes);
+        return mesInt >= 1 && mesInt <= 12;
+    }
+    
+    private static boolean isDiaMesValido(String dia, int limite) {
+        return Integer.parseInt(dia) <= limite;
+    }
+
+    private static boolean isDataValida2(String dia, String mes) {
+        if(mes.toUpperCase().equals("JANEIRO")) return isDiaMesValido(dia, 31);
+        if(mes.toUpperCase().equals("FEVEREIRO")) return isDiaMesValido(dia, 28);
+        if(mes.toUpperCase().equals("MARCO")) return isDiaMesValido(dia, 31);
+        if(mes.toUpperCase().equals("ABRIL")) return isDiaMesValido(dia, 30);
+        if(mes.toUpperCase().equals("MAIO")) return isDiaMesValido(dia, 31);
+        if(mes.toUpperCase().equals("JUNHO")) return isDiaMesValido(dia, 30);
+        if(mes.toUpperCase().equals("JULHO")) return isDiaMesValido(dia, 31);
+        if(mes.toUpperCase().equals("AGOSTO")) return isDiaMesValido(dia, 31);
+        if(mes.toUpperCase().equals("SETEMBRO")) return isDiaMesValido(dia, 30);
+        if(mes.toUpperCase().equals("OUTUBRO")) return isDiaMesValido(dia, 31);
+        if(mes.toUpperCase().equals("NOVEMBRO")) return isDiaMesValido(dia, 30);
+        if(mes.toUpperCase().equals("DEZEMBRO")) return isDiaMesValido(dia, 31);
+
+        return false;
+    }
+
+    private static boolean isDataValida2(String dia, int mes) {
         //verificando os meses
-        switch (mes.getMes()) {
-            case 1 :
+        switch (mes) {
+            case 1:
                 return isDiaMesValido(dia, 31);
             case 2:
                 return isDiaMesValido(dia, 28);
@@ -51,5 +96,12 @@ public class ValidaData {
             default:
                 return false;
         }
+    }
+
+    public static boolean isDataValida(String dia, String mes) {
+        if(isNumber(mes))
+            return isDataValida2(dia, Integer.parseInt(mes));
+        else
+            return isDataValida2(dia, mes);
     }
 }

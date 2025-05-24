@@ -1,11 +1,9 @@
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Pessoa {
 
     //lista de pessoas
-    private static List<Pessoa> pessoas = new ArrayList<>();
+    private static int qtdPessoas = 0;
 
     //atributos
     private String nome;
@@ -82,26 +80,25 @@ public class Pessoa {
         this.altura = altura;
     }
 
-    public static List<Pessoa> getPessoas() {
-        return Pessoa.pessoas;
+    public void incrementarPessoa() {
+        Pessoa.qtdPessoas++;
     }
 
-    public static void addPessoa(Pessoa p) {
-        Pessoa.pessoas.add(p);
+    public int getQtdPessoas() {
+        return Pessoa.qtdPessoas;
     }
 
-    private LocalDate getIdade() {
-        return LocalDate.now().minusYears(dataNasc.getYear());
+    private int getIdade() {
+        return LocalDate.now().getYear() - dataNasc.getYear();
     }
 
     @Override
     public String toString() {
         return "Nome: " + nome +
                 "\nSobrenome: " + sobreNome + 
-                "\nIdade" + getIdade() +
-                "\nCPF" + numCPF +
+                "\nIdade: " + getIdade() +
+                "\nCPF: " + numCPF +
                 "\nPeso: " + peso + 
                 "\nAltura: " + altura;
     }
-    
 }
