@@ -1,5 +1,6 @@
 
 import java.text.ParseException;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class P1nX {
@@ -13,32 +14,30 @@ public class P1nX {
             Pessoa pessoa = novaPessoa(args);
             System.out.println(pessoa);
             //Inserindo novas pessoas 
-            System.out.print("Quantas pessoas a mais deseja inserir? ");
-            int quantidadePessoas = sc.nextInt();
+            int quantidadePessoas = 0;
+            do {
+                System.out.print("Quantas pessoas a mais deseja inserir? ");
+                quantidadePessoas = sc.nextInt();
+                if (quantidadePessoas < 0) System.out.println("Quantidade inválida! Insira um número positivo.");
+            }while(quantidadePessoas < 0);
 
             //criando a instância do array
             Pessoa[] pessoas = new Pessoa[quantidadePessoas];
-            int quantidadeHomens = 0;
-            int quantidadeMulheres = 0;
             int cont = 0;
             //Limpando \n
             sc.nextLine();
 
             while(cont < quantidadePessoas) {
-                //lendo os dados
+                //lendo os dados e validando
                 String[] dados = lerDados(sc);
 
-                //validando os dados
-                validarArgumentos(dados);
-
                 //instanciando uma nova pessoa
+                if(dados == null) break;
                 pessoa = novaPessoa(dados);
-                if(pessoa instanceof Homem) quantidadeHomens++;
-                if(pessoa instanceof Mulher) quantidadeMulheres++;
                 pessoas[cont++] = pessoa;
 
             }
-            //Mostrando as inform
+            //Mostrando as informações
             printarPessoas(pessoas);
         }catch(ParseException exception){
             System.out.println("Formatação de dados inválida. Segue-se o valor dos campos que devem ser inseridos, nessa determinada ordem:");
@@ -63,38 +62,111 @@ public class P1nX {
     }
 
     private static void printarPessoas(Pessoa[] pessoas) {
+        int quantidadeHomens = 0;
+        int quantidadeMulheres = 0;
         if(pessoas.length != 0) {
             System.out.println("-----------------------------------------------------------");
             System.out.println("Informacoes inseridas: ");
             for(Pessoa p : pessoas) {
-                System.out.println(p);
-                System.out.println();
+                if(p != null) {
+                    if(p instanceof Homem) quantidadeHomens++;
+                    if(p instanceof Mulher) quantidadeMulheres++;
+                    System.out.println(p);
+                    System.out.println();
+                }
             }
+
+            System.out.println("Quantidade de mulheres inseridas: " + quantidadeMulheres);
+            System.out.println("Quantidade de homens inseridos: " + quantidadeHomens);
         }
     }
 
-    private static String[] lerDados(Scanner sc) {
+    private static String[] lerDados(Scanner sc) throws InputMismatchException, RuntimeException, ParseException{
         String[] dados = new String[9];
+        boolean valido = false;
+        do {
+            System.out.print("Insira o nome: ");
+            dados[1] = sc.nextLine();
+            if (dados[1].trim().isEmpty()) return null;
+            valido = isName(dados[1]);
+            if(!valido) System.out.println("Um nome não pode conter números. Ex.: Alexandre");
+        }while(!valido);
 
-        System.out.print("Insira o nome: ");
-        dados[1] = sc.nextLine();
-        System.out.print("Insira o sobrenome: ");
-        dados[2] = sc.nextLine();
-        System.out.print("Dia de nascimento: ");
-        dados[3] = sc.next();
-        System.out.print("Mes de nascimento: ");
-        dados[4] = sc.next();
-        System.out.print("Ano de nascimento: ");
-        dados[5] = sc.next();
-        System.out.print("Insira o CPF: ");
-        dados[6] = sc.next();
-        System.out.print("Insira o peso: ");
-        dados[7] = sc.next();
-        System.out.print("Insira a altura: ");
-        dados[8] = sc.next();
-        System.out.print("Esta pessoa é do genero feminino ou masculino (f ou m)? ");
-        dados[0] = sc.next();
-        sc.nextLine();
+        valido = false;
+        do {
+            System.out.print("Insira o sobrenome: ");
+            dados[2] = sc.nextLine();
+            if (dados[2].trim().isEmpty()) return null;
+            valido = isName(dados[2]);
+            if(!valido) System.out.println("O sobrenome não pode contar números. Ex: Vasconcellos");
+        }while(!valido);
+
+        valido = false;
+        do {
+            System.out.print("Dia de nascimento: ");
+            dados[3] = sc.nextLine();
+            if (dados[3].trim().isEmpty()) return null;
+            valido = ValidaData.isDia(dados[3]);
+            if(!valido) System.out.println("Dia inválido. Insira um dia existente. O dia do mês deve estar de acordo com o calendário usual de seu ano.");
+        }while(!valido);
+
+        valido = false;
+        do {
+            System.out.print("Mes de nascimento: ");
+            dados[4] = sc.nextLine();
+            if (dados[4].trim().isEmpty()) return null;
+            valido = ValidaData.isMes(dados[4]) && ValidaData.isDataValida(dados[3], dados[4]);
+            if(!valido) System.out.println("Mes inválido. O mês deve ser escrito por extenso sem acentuacoes ou o seu respectivo número de acordo com o calendário e deve estar em conformidade com o dia escolhido" + "\nExemplo de data válida: 31 de janeiro" + "\n Exemplo de data inválida: 31 de fevereiro");
+        }while(!valido);
+
+        valido = false;
+        do {
+            System.out.print("Ano de nascimento: ");
+            dados[5] = sc.nextLine();
+            if (dados[5].trim().isEmpty()) return null;
+            valido = ValidaData.isAno(dados[5]);
+            if(!valido) System.out.println("Ano inválido. O ano deve deve conter um distância de 120 até a data atual.");
+        }while(!valido);
+
+        valido = false;
+        do {
+            try {
+                System.out.print("Insira o CPF: ");
+                dados[6] = sc.nextLine();
+                if (dados[6].trim().isEmpty()) return null;
+                valido = ValidaCPF.isCPF(dados[6]);
+            }catch(RuntimeException exception) {
+                System.out.println(exception.getMessage());
+            }
+        }while(!valido);
+
+        valido = false;
+        do {
+            System.out.print("Insira o peso: ");
+            dados[7] = sc.nextLine();
+            if (dados[7].trim().isEmpty()) return null;
+            valido = isPeso(dados[7]);
+            if(!valido) System.out.println("Peso inválido. Insira um peso possível. Ex.: 70.0, 120.0, 45.0");
+        }while(!valido);
+
+        valido = false;
+        do {
+            System.out.print("Insira a altura");
+            dados[8] = sc.nextLine();
+            if (dados[8].trim().isEmpty()) return null;
+            valido = isAltura(dados[8]);
+            if(!valido) System.out.println("Altura inválida. Insira uma altura possível. Ex.: 0.4, 1.6, 2.07");
+        }while(!valido);
+
+        valido = false;
+        do {
+            System.out.print("Esta pessoa é do genero feminino ou masculino (f ou m)? ");
+            dados[0] = sc.nextLine();
+            if (dados[0].trim().isEmpty()) return null;
+            valido = isGender(dados[0]);
+            if(!valido) System.out.println("Entrada de gênero incorreta. Valores aceitos para gênero: 'f' ou 'm'.");
+        }while(!valido);
+
         return dados;
     }
 
@@ -124,7 +196,7 @@ public class P1nX {
         if (args.length != 9) throw new RuntimeException("Informações faltando. Por favor, preencha todos os dados separados por espaço: Nome, Sobrenome, dia, mes, ano, CPF, peso e altura.");
         
         //Verificando o genero:
-        if (!isGender(args[0])) throw new RuntimeException("Valores aceitos para gênero: 'f' ou 'm'.");
+        if (!isGender(args[0])) throw new RuntimeException("Entrada de gênero incorreta. Valores aceitos para gênero: 'f' ou 'm'.");
 
         //Verificando o nome:
         if (!isName(args[1])) throw new RuntimeException("Um nome não pode conter números. Ex.: Alexandre");
