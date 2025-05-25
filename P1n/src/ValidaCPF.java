@@ -134,7 +134,7 @@ public class ValidaCPF {
             throw new RuntimeException("Não foi possível realizar a conversão");
     }
     
-    public String imprimeCPF(String CPF) {
+    public static String imprimeCPF(String CPF) {
         CPF = CPF.replaceAll("[-./]", "");
         return CPF.substring(0, 3) + "." + CPF.substring(3, 6) + "." +
         CPF.substring(6, 9) + "-" + CPF.substring(9, 11);

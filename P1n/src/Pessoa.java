@@ -97,7 +97,7 @@ public class Pessoa {
         return "Nome: " + nome +
                 "\nSobrenome: " + sobreNome + 
                 "\nIdade: " + getIdade() +
-                "\nCPF: " + numCPF +
+                "\nCPF: " + ValidaCPF.imprimeCPF("" + numCPF) +
                 "\nPeso: " + peso + 
                 "\nAltura: " + altura;
     }

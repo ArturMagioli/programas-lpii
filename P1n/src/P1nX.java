@@ -1,13 +1,10 @@
 
 import java.text.ParseException;
 import java.util.Scanner;
-import java.util.List;
-import java.util.ArrayList;
 
 public class P1nX {
     public static void main(String[] args) {
         Scanner sc = null;
-        List<Pessoa> listaPessoas = new ArrayList<>();
         try {
             sc = new Scanner(System.in);
             //Validando os argumentos pelo terminal
@@ -19,10 +16,30 @@ public class P1nX {
             System.out.print("Quantas pessoas a mais deseja inserir? ");
             int quantidadePessoas = sc.nextInt();
 
-            while(quantidadePessoas > 0) {
+            //criando a instância do array
+            Pessoa[] pessoas = new Pessoa[quantidadePessoas];
+            int quantidadeHomens = 0;
+            int quantidadeMulheres = 0;
+            int cont = 0;
+            //Limpando \n
+            sc.nextLine();
+
+            while(cont < quantidadePessoas) {
+                //lendo os dados
                 String[] dados = lerDados(sc);
-                
+
+                //validando os dados
+                validarArgumentos(dados);
+
+                //instanciando uma nova pessoa
+                pessoa = novaPessoa(dados);
+                if(pessoa instanceof Homem) quantidadeHomens++;
+                if(pessoa instanceof Mulher) quantidadeMulheres++;
+                pessoas[cont++] = pessoa;
+
             }
+            //Mostrando as inform
+            printarPessoas(pessoas);
         }catch(ParseException exception){
             System.out.println("Formatação de dados inválida. Segue-se o valor dos campos que devem ser inseridos, nessa determinada ordem:");
             System.out.println("Gênero;");
@@ -41,15 +58,28 @@ public class P1nX {
         }finally {
             sc.close();
         }
+
+        System.out.println("Programa encerrado.");
+    }
+
+    private static void printarPessoas(Pessoa[] pessoas) {
+        if(pessoas.length != 0) {
+            System.out.println("-----------------------------------------------------------");
+            System.out.println("Informacoes inseridas: ");
+            for(Pessoa p : pessoas) {
+                System.out.println(p);
+                System.out.println();
+            }
+        }
     }
 
     private static String[] lerDados(Scanner sc) {
         String[] dados = new String[9];
 
         System.out.print("Insira o nome: ");
-        dados[1] = sc.next();
-        System.out.print("Insira o sobrenome");
-        dados[2] = sc.next();
+        dados[1] = sc.nextLine();
+        System.out.print("Insira o sobrenome: ");
+        dados[2] = sc.nextLine();
         System.out.print("Dia de nascimento: ");
         dados[3] = sc.next();
         System.out.print("Mes de nascimento: ");
@@ -60,10 +90,11 @@ public class P1nX {
         dados[6] = sc.next();
         System.out.print("Insira o peso: ");
         dados[7] = sc.next();
-        System.out.print("Insira a altura");
+        System.out.print("Insira a altura: ");
         dados[8] = sc.next();
         System.out.print("Esta pessoa é do genero feminino ou masculino (f ou m)? ");
         dados[0] = sc.next();
+        sc.nextLine();
         return dados;
     }
 
