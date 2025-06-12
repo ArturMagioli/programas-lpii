@@ -68,15 +68,13 @@ public class Pessoa {
         return Pessoa.qtdPessoas;
     }
 
-    private int getIdade() {
-        return LocalDate.now().getYear() - dataNasc.getYear();
-    }
+    // private int getIdade() {
+    //     return LocalDate.now().getYear() - dataNasc.getYear();
+    // }
 
     @Override
     public String toString() {
         return "Nome: " + nome +
-                "\nSobrenome: " + sobreNome + 
-                "\nIdade: " + getIdade() +
-                "\nCPF: " + ValidaCPF.imprimeCPF("" + numCPF);
+                "\nData de Nascimento: " + dataNasc;
     }
 }
