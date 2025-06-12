@@ -140,23 +140,23 @@ public class P1nX {
             }
         }while(!valido);
 
-        valido = false;
-        do {
-            System.out.print("Insira o peso: ");
-            dados[7] = sc.nextLine();
-            if (dados[7].trim().isEmpty()) return null;
-            valido = isPeso(dados[7]);
-            if(!valido) System.out.println("Peso inválido. Insira um peso possível. Ex.: 70.0, 120.0, 45.0");
-        }while(!valido);
+        // valido = false;
+        // do {
+        //     System.out.print("Insira o peso: ");
+        //     dados[7] = sc.nextLine();
+        //     if (dados[7].trim().isEmpty()) return null;
+        //     valido = isPeso(dados[7]);
+        //     if(!valido) System.out.println("Peso inválido. Insira um peso possível. Ex.: 70.0, 120.0, 45.0");
+        // }while(!valido);
 
-        valido = false;
-        do {
-            System.out.print("Insira a altura");
-            dados[8] = sc.nextLine();
-            if (dados[8].trim().isEmpty()) return null;
-            valido = isAltura(dados[8]);
-            if(!valido) System.out.println("Altura inválida. Insira uma altura possível. Ex.: 0.4, 1.6, 2.07");
-        }while(!valido);
+        // valido = false;
+        // do {
+        //     System.out.print("Insira a altura");
+        //     dados[8] = sc.nextLine();
+        //     if (dados[8].trim().isEmpty()) return null;
+        //     valido = isAltura(dados[8]);
+        //     if(!valido) System.out.println("Altura inválida. Insira uma altura possível. Ex.: 0.4, 1.6, 2.07");
+        // }while(!valido);
 
         valido = false;
         do {
@@ -179,14 +179,14 @@ public class P1nX {
         int mes = ValidaData.converterMes(args[4]);
         int ano = Integer.parseInt(args[5]);
         long numCPF = Long.parseLong(args[6].replaceAll("[-./]", ""));
-        float peso = Float.parseFloat(args[7]);
-        float altura = Float.parseFloat(args[8]);
+        // float peso = Float.parseFloat(args[7]);
+        // float altura = Float.parseFloat(args[8]);
 
         if (genero.equals("f")) {
-            pessoa = new Mulher(nome, sobreNome, dia, mes, ano, numCPF, peso, altura);
+            pessoa = new Mulher(nome, sobreNome, dia, mes, ano, numCPF);
         }
         if (genero.equals("m")) {
-            pessoa = new Homem(nome, sobreNome, dia, mes, ano, numCPF, peso, altura);
+            pessoa = new Homem(nome, sobreNome, dia, mes, ano, numCPF);
         }
 
         return pessoa;
@@ -221,10 +221,10 @@ public class P1nX {
         ValidaCPF.isCPF(args[6]);
 
         //Verificando o peso:
-        if(!isPeso(args[7])) throw new RuntimeException("Peso inválido. Insira um peso possível. Ex.: 70.0, 120.0, 45.0");
+        // if(!isPeso(args[7])) throw new RuntimeException("Peso inválido. Insira um peso possível. Ex.: 70.0, 120.0, 45.0");
 
         //Verificando a altura:
-        if(!isAltura(args[8])) throw new RuntimeException("Altura inválida. Insira uma altura possível. Ex.: 0.4, 1.6, 2.07");
+        // if(!isAltura(args[8])) throw new RuntimeException("Altura inválida. Insira uma altura possível. Ex.: 0.4, 1.6, 2.07");
     }
 
     private static boolean isGender(String c) {
@@ -242,13 +242,13 @@ public class P1nX {
         return true;
     }
 
-    private static boolean isPeso(String peso) throws ParseException{
-        float pesoFloat = Float.parseFloat(peso);
-        return pesoFloat >= 20.0 && pesoFloat <= 300.0;
-    }
+    // private static boolean isPeso(String peso) throws ParseException{
+    //     float pesoFloat = Float.parseFloat(peso);
+    //     return pesoFloat >= 20.0 && pesoFloat <= 300.0;
+    // }
 
-    private static boolean isAltura(String altura) throws ParseException{
-        float alturaFloat = Float.parseFloat(altura);
-        return alturaFloat >= 0.4 && alturaFloat <= 2.5;
-    }
+    // private static boolean isAltura(String altura) throws ParseException{
+    //     float alturaFloat = Float.parseFloat(altura);
+    //     return alturaFloat >= 0.4 && alturaFloat <= 2.5;
+    // }
 }

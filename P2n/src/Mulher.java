@@ -2,8 +2,8 @@ public class Mulher extends Pessoa{
 
     private final String GENERO = "Feminino";
 
-    public Mulher(String nome, String sobreNome, int dia, int mes, int ano, long numCPF, float peso, float altura) {
-        super(nome, sobreNome, dia, mes, ano, numCPF, peso, altura);
+    public Mulher(String nome, String sobreNome, int dia, int mes, int ano, long numCPF) {
+        super(nome, sobreNome, dia, mes, ano, numCPF);
     }
 
     public Mulher(String nome, String sobreNome, int dia, int mes, int ano) {

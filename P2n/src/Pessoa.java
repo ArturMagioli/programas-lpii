@@ -14,24 +14,18 @@ public class Pessoa {
 
     private long numCPF;
 
-    private float peso;
-
-    private float altura;
-
-    public Pessoa(String nome, String sobreNome, int dia, int mes, int ano, long numCPF, float peso, float altura) {
+    public Pessoa(String nome, String sobreNome, int dia, int mes, int ano, long numCPF) {
         this.nome = nome;
         this.sobreNome = sobreNome;
         this.dataNasc = LocalDate.of(ano, mes, dia);
         this.numCPF = numCPF;
-        this.peso = peso;
-        this.altura = altura;
-
+        
         incrementarPessoa();
     }
 
     public Pessoa(String nome, String sobreNome, int dia, int mes, int ano) {
         //reaproveitando o construtor e impondo valores padão para os não preenchidos: 
-        this(nome, sobreNome, dia, mes, ano, -1, -1, -1);
+        this(nome, sobreNome, dia, mes, ano, -1);
     }
 
     public String getNome() {
@@ -66,22 +60,6 @@ public class Pessoa {
         this.numCPF = numCPF;
     }
 
-    public float getPeso() {
-        return peso;
-    }
-
-    public void setPeso(float peso) {
-        this.peso = peso;
-    }
-
-    public float getAltura() {
-        return altura;
-    }
-
-    public void setAltura(float altura) {
-        this.altura = altura;
-    }
-
     public void incrementarPessoa() {
         Pessoa.qtdPessoas++;
     }
@@ -99,8 +77,6 @@ public class Pessoa {
         return "Nome: " + nome +
                 "\nSobrenome: " + sobreNome + 
                 "\nIdade: " + getIdade() +
-                "\nCPF: " + ValidaCPF.imprimeCPF("" + numCPF) +
-                "\nPeso: " + peso + 
-                "\nAltura: " + altura;
+                "\nCPF: " + ValidaCPF.imprimeCPF("" + numCPF);
     }
 }
