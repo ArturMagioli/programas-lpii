@@ -64,11 +64,11 @@ public class Pessoa {
 
     @Override
     public String toString() {
-        String dados = "";
+        String dados = "----------------------------------";
         if (this instanceof Homem) {
-            dados = "Nome: " + nome + " (Homem)";
+            dados += "\nNome: " + nome + " (Homem)";
         }else {
-            dados = "Nome: " + nome + " (Mulher)";
+            dados += "\nNome: " + nome + " (Mulher)";
         }
         dados += "\nData de Nascimento: " + dataNasc.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + 
                 "\nCPF: " + ValidaCPF.imprimeCPF("" + numCPF);

@@ -20,6 +20,6 @@ public class Mulher extends PessoaIMC{
     @Override
     public String toString() {
         return super.toString() +
-            "\nResultado IMC: " + resultIMC();
+            "\nIMC: " + String.format("%.1f", calculaIMC()) + " " + resultIMC() + "\n";
     }
 }

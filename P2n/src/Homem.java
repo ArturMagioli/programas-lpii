@@ -20,6 +20,6 @@ public class Homem extends PessoaIMC {
     @Override
     public String toString() {
         return super.toString() +
-            "\nIMC: " + String.format("%.1f", calculaIMC()) + " " + resultIMC();
+            "\nIMC: " + String.format("%.1f", calculaIMC()) + " " + resultIMC() + "\n";
     }
 }
