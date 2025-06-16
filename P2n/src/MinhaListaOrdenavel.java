@@ -22,17 +22,13 @@ public class MinhaListaOrdenavel {
     //Comparadores:
     public Comparator<PessoaIMC> nomeC = new Comparator<PessoaIMC>() {
         public int compare(PessoaIMC p1, PessoaIMC p2) {
-            int num1 = p1.getNome().charAt(0);
-            int num2 = p2.getNome().charAt(0);
-            return Integer.compare(num1, num2);
+            return p1.getNome().compareTo(p2.getNome());
         };
     };
 
     public Comparator<PessoaIMC> nomeCI = new Comparator<PessoaIMC>() {
         public int compare(PessoaIMC p1, PessoaIMC p2) {
-            int num1 = p1.getNome().charAt(0);
-            int num2 = p2.getNome().charAt(0);
-            return Integer.compare(num2, num1);
+            return p2.getNome().compareTo(p1.getNome());
         };
     };
 
